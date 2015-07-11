@@ -1,0 +1,7 @@
+# Add go workspace directory path
+export GOPATH=$HOME/projects/go
+export GOROOT=/usr/local/go
+
+# Add go bin PATH environment variable
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+

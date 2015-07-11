@@ -1,0 +1,23 @@
+[user]
+	name = Tony Mutai
+	email = tonimut7@gmail.com
+
+[core]
+	editor = vim
+	pager = less
+	excludesfile = ~/.gitignore
+	attributesfile = ~/.gitattributes
+
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+
+[commit]
+	template = ~/.gitmessage
+
+[alias]
+  oneline = "!oneliner(){ n=${1:-10}; git log --oneline -$n; };oneliner"
+  info = "!fun_info(){ git --version; };fun_info"
+
+[github]
+  user = lestoni
