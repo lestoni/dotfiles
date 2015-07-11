@@ -6,10 +6,26 @@ Feel free to clone/fork.
 
 ## Installation.
 
+Bootstrap dotfiles
+
 ```
-  $ git clone https://github.com/lestoni/dotfiles.git ~/dotfiles
-  $ ~/dotfiles/init
+  $ git clone https://github.com/lestoni/dotfiles.git
+  $ ./dotfiles/bootstrap.sh
 ```
+
+Install packages
+
+```
+  $ sudo ./bin/install
+```
+
+Install Vim plugins
+
+```
+  $ cd ~/.vim
+  $ ./install.sh
+```
+
 
 ## Thanks to ...
 
