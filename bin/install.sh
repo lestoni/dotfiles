@@ -5,7 +5,6 @@ function base() {
   apt-get update
 
   apt-get install -y\
-    ubuntu-restricted-extras\
     build-essential\
     gcc\
     python-dev\
@@ -44,42 +43,37 @@ function install_docker() {
   echo 'Remember to restart for changes to take effect'
 }
 
+function install_nvm() {
+    wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+    echo "nvm installed";
+}
+
 # Install nodejs via n
 # A bit naive though
 function install_node() {
-  git clone git@github.com:tj/n.git &&\
-    cd n &&\
-    make install &&\
-    n stable &&\
-    cd ../ &&\
-    rm -rf n
+    install_nvm && nvm install --lts
 
-  echo "current node $(node -v) version"
+    echo "current node $(node -v) version"
 }
 
 # install golang
 # via awesome gvm -> https://github.com/moovweb/gvm
 function install_golang() {
-  GO_VERSION=1.4.2
-  bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
+    wget -q -O - https://raw.githubusercontent.com/canha/golang-tools-install-script/master/goinstall.sh | bash
 
-  echo "$(gvm version)"
-
-  gvm install $GO_VERSION
-
-  echo "$(go version)"
+    echo go version
 }
 
 function usage() {
-  echo -e "install.sh\n\tThis script installs my basic setup for a ubuntu laptop\n"
-  echo "Usage:"
-  echo "  pkgs                        - install base pkgs"
-  echo "  dotfiles                    - get dotfiles"
-  echo "  golang                      - install gvm and golang"
-  echo "  nodejs                      - install n and setup nodejs"
-  echo "  docker                      - install docker"
-  echo "  z                           - for the love of z"
-
+    echo -e "install.sh\n\tThis script installs my basic setup for a ubuntu laptop\n"
+    echo "Usage:"
+    echo "  pkgs                        - install base pkgs"
+    echo "  dotfiles                    - get dotfiles"
+    echo "  golang                      - install golang"
+    echo "  nvm                         - install nvm"
+    echo "  nodejs                      - install nodejs"
+    echo "  docker                      - install docker"
+    echo "  z                           - for the love of z"
 }
 
 function install_z() {
@@ -94,30 +88,32 @@ function check_is_sudo() {
 }
 
 function main() {
-  local cmd=$1
+    local cmd=$1
 
-  if [[ -z "$cmd" ]]; then
-    usage
-    exit 1
-  fi
+    if [[ -z "$cmd" ]]; then
+        usage
+        exit 1
+    fi
 
-  if [[ $cmd == "pkgs" ]]; then
-    check_is_sudo
+    if [[ $cmd == "pkgs" ]]; then
+        check_is_sudo
 
-    base
-  elif [[ $cmd == "dotfiles" ]]; then
-    get_dotfiles
-  elif [[ $cmd == "golang" ]]; then
-    install_golang $2
-  elif [[ $cmd == "nodejs" ]]; then
-    install_node $2
-  elif [[ $cmd == "docker" ]]; then
-    install_docker $2
-  elif [[ $cmd == "z" ]]; then
-    install_z $2
-  else
-    usage
-  fi
+        base
+    elif [[ $cmd == "dotfiles" ]]; then
+        get_dotfiles
+    elif [[ $cmd == "golang" ]]; then
+        install_golang $2
+    elif [[ $cmd == "nvm" ]]; then
+        install_nvm $2
+    elif [[ $cmd == "nodejs" ]]; then
+        install_node $2
+    elif [[ $cmd == "docker" ]]; then
+        install_docker $2
+    elif [[ $cmd == "z" ]]; then
+        install_z $2
+    else
+        usage
+    fi
 }
 
 main $@
