@@ -1,7 +1,8 @@
 # Add go workspace directory path
-export GOPATH=$HOME/projects/go
-export GOROOT=/usr/local/go
+export GOPATH=$HOME/Projects/golang
+export GOROOT="$(brew --prefix golang)/libexec"
 
 # Add go bin PATH environment variable
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
+
 
